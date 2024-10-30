@@ -1,0 +1,49 @@
+app:
+  name: epalika-app
+spring:
+  profiles.active: develop
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+      enabled: true
+  h2:
+    console:
+      enabled: true
+      path: /console
+      settings:
+        trace: false
+        web-allow-others: false
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+server:
+  port: 9080
+management:
+  port: 9180
+  security:
+    enabled: false
+  endpoints:
+    web.base-path: /
+
+jwt:
+  key: ${SECRET_KEY}
+
+mail:
+  username: ${MAIL_USERNAME}
+  password: ${MAIL_PASSWORD}
+  host: ${MAIL_HOST}
+  port: ${MAIL_PORT}
+
+origin: ${BASE_URL}
+
+
+
+
