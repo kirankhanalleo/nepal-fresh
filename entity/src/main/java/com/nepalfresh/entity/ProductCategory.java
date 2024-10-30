@@ -1,0 +1,25 @@
+package com.nepalfresh.entity;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import java.sql.Timestamp;
+
+@Getter
+@Setter
+@Entity
+@Table(name="product_categories")
+public class ProductCategory extends AbstractEntity{
+
+    @Column(name="name", nullable = false, unique = true)
+    private String name;
+
+    @Column(name="description")
+    private String description;
+
+    @Column(name="created_at")
+    private Timestamp createdAt;
+
+    @Column(name="updated_at")
+    private Timestamp updatedAt;
+}
