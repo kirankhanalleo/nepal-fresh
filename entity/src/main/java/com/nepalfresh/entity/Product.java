@@ -1,8 +1,6 @@
 package com.nepalfresh.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,20 +16,28 @@ public class Product extends AbstractEntity{
     @Column(name="name", nullable = false)
     private String name;
 
+    @Column(name="slug", nullable = false)
+    private String slug;
+
     @Column(name="description", nullable = false)
     private String description;
 
-    @Column(name="category_id", nullable = false)
-    private Integer categoryId;
+    @ManyToOne
+    @JoinColumn(name="product_category",nullable = false, referencedColumnName = "id")
+    private ProductCategory category;
 
     @Column(name="price", nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
 
+    @Column(name="offer_price", nullable = true, precision = 10, scale = 2)
+    private BigDecimal offerPrice;
+
     @Column(name = "stock_quantity", nullable = false)
     private Integer stockQuantity;
 
-    @Column(name = "status", nullable = false)
-    private Integer status;
+    @JoinColumn(name="status",nullable = false, referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private ProductStatus status;
 
     @Column(name="created_at")
     private Timestamp createdAt;
