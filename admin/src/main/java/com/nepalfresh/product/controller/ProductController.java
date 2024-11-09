@@ -41,4 +41,8 @@ public class ProductController {
     public Mono<ApiResponse> markAsInStock(@RequestBody @Valid UpdateProductStatusRequest updateProductStatusRequest){
         return productService.markAsInStock(updateProductStatusRequest);
     }
+    @PostMapping(ApiConstant.UNAVAILABLE)
+    public Mono<ApiResponse> markAsUnavailable(@RequestBody @Valid UpdateProductStatusRequest updateProductStatusRequest){
+        return productService.markAsUnavailable(updateProductStatusRequest);
+    }
 }

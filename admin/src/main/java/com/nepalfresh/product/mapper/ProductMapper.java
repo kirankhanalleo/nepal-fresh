@@ -72,4 +72,9 @@ public abstract class ProductMapper {
         product.setStatus(productStatusRepository.findByName(ProductStatusConstant.IN_STOCK.getName()));
         productRepository.save(product);
     }
+
+    public void mapToUnavailable(Product product){
+        product.setStatus(productStatusRepository.findByName(ProductStatusConstant.UNAVAILABLE.getName()));
+        productRepository.save(product);
+    }
 }

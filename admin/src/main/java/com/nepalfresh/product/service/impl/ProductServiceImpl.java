@@ -123,4 +123,26 @@ public class ProductServiceImpl implements ProductService {
             return Mono.just(ResponseUtil.getFailureResponse("Product update failed. Please try again later."));
         }
     }
+
+    @Override
+    @Transactional
+    public Mono<ApiResponse> markAsUnavailable(UpdateProductStatusRequest updateProductStatusRequest) {
+        Optional<Product> existingProduct = productRepository.findBySlug(updateProductStatusRequest.getSlug());
+        if (existingProduct.isEmpty()){
+            return Mono.just(ResponseUtil.getFailureResponse("Product does not exist"));
+        }
+        try{
+            if (ProductStatusConstant.UNAVAILABLE.getName().equals(existingProduct.get().getStatus().getName())){
+                return Mono.just(ResponseUtil.getFailureResponse("Product already marked as unavailable"));
+            }
+            productMapper.mapToUnavailable(existingProduct.get());
+            return Mono.just(ResponseUtil.getSuccessfulApiResponse("Product marked as unavailable"));
+        }
+        catch(DataIntegrityViolationException e){
+            return Mono.just(ResponseUtil.getFailureResponse("Product update failed due to data integrity violation"));
+        }
+        catch (Exception e){
+            return Mono.just(ResponseUtil.getFailureResponse("Product update failed. Please try again later."));
+        }
+    }
 }

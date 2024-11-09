@@ -14,4 +14,5 @@ public interface ProductService {
     Mono<ApiResponse<?>> viewProduct(ViewProductRequest viewProductRequest);
     Mono<ApiResponse> markAsOutOfStock(UpdateProductStatusRequest updateProductStatusRequest);
     Mono<ApiResponse> markAsInStock(UpdateProductStatusRequest updateProductStatusRequest);
+    Mono<ApiResponse> markAsUnavailable(UpdateProductStatusRequest updateProductStatusRequest);
 }
