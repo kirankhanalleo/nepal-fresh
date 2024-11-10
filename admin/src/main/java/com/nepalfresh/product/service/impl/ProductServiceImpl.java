@@ -2,57 +2,79 @@ package com.nepalfresh.product.service.impl;
 
 import com.nepalfresh.common.constant.ProductStatusConstant;
 import com.nepalfresh.common.dto.ApiResponse;
+import com.nepalfresh.common.dto.PageableResponse;
+import com.nepalfresh.common.dto.SearchParam;
+import com.nepalfresh.common.dto.SearchResponseWithMapperBuilder;
+import com.nepalfresh.common.service.SearchResponse;
 import com.nepalfresh.common.util.ResponseUtil;
 import com.nepalfresh.entity.Product;
 import com.nepalfresh.product.mapper.ProductMapper;
 import com.nepalfresh.product.model.request.*;
 import com.nepalfresh.product.model.ProductDto;
 import com.nepalfresh.product.service.ProductService;
-import com.nepalfresh.repository.ProductRepository;
+import com.nepalfresh.repository.product.ProductRepository;
+import com.nepalfresh.repository.product.ProductSearchRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
-
-import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
+    private final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final ProductSearchRepository productSearchRepository;
+    private final SearchResponse searchResponse;
 
     @Override
     @Transactional
     public Mono<ApiResponse> createProduct(CreateProductRequest createProductRequest) {
+        logger.info("Attempting to create a product with name: {}", createProductRequest.getName());
+
         Optional<Product> existingProduct = productRepository.findByName(createProductRequest.getName());
-        if(existingProduct.isPresent())
+        if(existingProduct.isPresent()) {
+            logger.warn("Product creation failed. Product with name '{}' already exists", createProductRequest.getName());
             return Mono.just(ResponseUtil.getFailureResponse("Product with the same name already exists"));
+        }
         try{
             Product product = productMapper.mapToCreateProduct(createProductRequest);
             productRepository.save(product);
+            logger.info("Product created successfully with name : {}", product.getName());
             return Mono.just(ResponseUtil.getSuccessfulApiResponse("Product Created Successfully"));
         }
         catch(DataIntegrityViolationException e){
+            logger.error("Data integrity violation while creating product: {}", createProductRequest.getName(), e);
             return Mono.just(ResponseUtil.getFailureResponse("Product creation failed due to data integrity violation"));
         }
         catch (Exception e){
+            logger.error("Unexpected error occurred while creating product: {}", createProductRequest.getName(), e);
             return Mono.just(ResponseUtil.getFailureResponse("Product creation failed. Please try again later."));
         }
     }
 
     @Override
-    public Mono<ApiResponse<?>> listAllProduct() {
-        List<ListProductRequest> products = productMapper.mapToListProduct(productRepository.findAll());
+    public Mono<ApiResponse<?>> listAllProduct(SearchParam searchParam) {
+        SearchResponseWithMapperBuilder<Product, ListProductRequest>  responseBuilder= SearchResponseWithMapperBuilder.<Product, ListProductRequest>builder()
+                .count(productSearchRepository::count)
+                .searchData(productSearchRepository::getAll)
+                .mapperFunction(this.productMapper::mapToListProduct)
+                .searchParam(searchParam)
+                .build();
+        PageableResponse<ListProductRequest> products = searchResponse.getSearchResponse(responseBuilder);
         return Mono.just(ResponseUtil.getSuccessfulApiResponse(products,"Product listed successfully"));
-
     }
 
     @Override
     @Transactional
     public Mono<ApiResponse> updateProduct(UpdateProductRequest updateProductRequest) {
+        logger.info("Attempting to update a product with slug: {}", updateProductRequest.getSlug());
+
         Optional<Product> existingProduct = productRepository.findBySlug(updateProductRequest.getSlug());
         if (existingProduct.isEmpty()){
             return Mono.just(ResponseUtil.getFailureResponse("Product does not exist"));

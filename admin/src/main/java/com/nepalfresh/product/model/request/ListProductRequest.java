@@ -6,9 +6,8 @@ import com.nepalfresh.common.dto.ProductStatusDto;
 import com.nepalfresh.productCategory.model.ProductCategoryModel;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.math.BigDecimal;
 import java.sql.Timestamp;
+
 @Getter
 @Setter
 public class ListProductRequest extends ModelBase {
@@ -17,4 +16,6 @@ public class ListProductRequest extends ModelBase {
     private ProductCategoryModel category;
     private ProductStatusDto status;
     private Integer stockQuantity;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss a", timezone = "Asia/Kathmandu")
+    private Timestamp createdAt;
 }

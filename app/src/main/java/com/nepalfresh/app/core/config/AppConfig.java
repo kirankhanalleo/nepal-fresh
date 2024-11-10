@@ -1,6 +1,6 @@
 package com.nepalfresh.app.core.config;
 
-import com.nepalfresh.repository.CustomerRepository;
+import com.nepalfresh.repository.customer.CustomerRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

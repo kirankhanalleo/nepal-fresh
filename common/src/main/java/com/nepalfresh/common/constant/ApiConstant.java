@@ -10,6 +10,7 @@ public class ApiConstant {
     public static final String SET = "set";
     public static final String LIST = "list";
     public static final String VIEW = "view";
+    public static final String MARK ="mark";
     public static final String OUT_OF_STOCK = "out-of-stock";
     public static final String IN_STOCK = "in-stock";
     public static final String UNAVAILABLE = "unavailable";

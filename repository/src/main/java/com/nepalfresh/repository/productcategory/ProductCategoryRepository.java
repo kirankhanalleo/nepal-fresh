@@ -1,4 +1,4 @@
-package com.nepalfresh.repository;
+package com.nepalfresh.repository.productcategory;
 
 import com.nepalfresh.entity.ProductCategory;
 import org.springframework.data.jpa.repository.JpaRepository;

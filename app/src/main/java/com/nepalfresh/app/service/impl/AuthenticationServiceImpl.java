@@ -9,7 +9,7 @@ import com.nepalfresh.common.dto.ApiResponse;
 import com.nepalfresh.common.repo.StatusRepository;
 import com.nepalfresh.common.util.ResponseUtil;
 import com.nepalfresh.entity.Customer;
-import com.nepalfresh.repository.CustomerRepository;
+import com.nepalfresh.repository.customer.CustomerRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;

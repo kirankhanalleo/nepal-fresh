@@ -7,7 +7,7 @@ import com.nepalfresh.common.mapper.ProductCategoryMapper;
 import com.nepalfresh.common.util.ResponseUtil;
 import com.nepalfresh.entity.ProductCategory;
 import com.nepalfresh.productCategory.service.ProductCategoryService;
-import com.nepalfresh.repository.ProductCategoryRepository;
+import com.nepalfresh.repository.productcategory.ProductCategoryRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

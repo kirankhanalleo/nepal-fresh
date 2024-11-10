@@ -8,7 +8,7 @@ import com.nepalfresh.authentication.core.service.JwtService;
 import com.nepalfresh.entity.Customer;
 import com.nepalfresh.authentication.models.AuthenticationRequest;
 import com.nepalfresh.authentication.models.AuthenticationResponse;
-import com.nepalfresh.repository.CustomerRepository;
+import com.nepalfresh.repository.customer.CustomerRepository;
 import com.nepalfresh.authentication.service.AuthenticationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
