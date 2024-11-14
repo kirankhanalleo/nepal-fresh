@@ -18,4 +18,6 @@ public class ApiConstant {
     public static final String UNBLOCK = "unblock";
     public static final String PRODUCT_CATEGORY = "product-category";
     public static final String PRODUCT = "product";
+    public static final String CART = "cart";
+    public static final String ADD = "add";
 }

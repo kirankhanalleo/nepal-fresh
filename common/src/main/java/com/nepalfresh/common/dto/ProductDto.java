@@ -9,9 +9,9 @@ import java.math.BigDecimal;
 @Setter
 public class ProductDto extends ModelBase {
     private String name;
+    private String slug;
     private String description;
-    private Integer categoryId;
     private BigDecimal price;
-    private Integer stockQuantity;
-    private Integer status;
+    private BigDecimal offerPrice;
+    private ProductStatusDto status;
 }

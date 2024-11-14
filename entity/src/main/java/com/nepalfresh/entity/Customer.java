@@ -31,7 +31,7 @@ public class Customer extends AbstractEntity implements UserDetails {
     @Column(name = "username")
     private String username;
 
-    @Column(name="date_of_birth", nullable = false)
+    @Column(name="date_of_birth")
     private LocalDate dateOfBirth;
 
     @JoinColumn(name = "gender", referencedColumnName = "id")

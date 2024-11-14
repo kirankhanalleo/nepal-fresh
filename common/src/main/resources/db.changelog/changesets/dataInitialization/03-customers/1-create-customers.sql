@@ -10,9 +10,9 @@ CREATE TABLE IF NOT EXISTS `customers`
     username                        VARCHAR(255)          NULL,
     is_active                       BIT(1)                NULL,
     email                           VARCHAR(255)          NOT NULL,
-    mobile_number                   VARCHAR(255)          NOT NULL,
-    date_of_birth                   datetime              NOT NULL,
-    gender                          BIGINT                NOT NULL,
+    mobile_number                   VARCHAR(255)          NULL,
+    date_of_birth                   datetime              NULL,
+    gender                          BIGINT                NULL,
     address                         VARCHAR(255)          NULL,
     status                          BIGINT                NOT NULL,
     registered_date                 datetime              NULL,
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `customers`
     wrong_password_attempt_count    INT                   NULL,
     profile_picture                 VARCHAR(255)          NULL,
     otp_auth_secret                 VARCHAR(255)          NULL,
-    two_factor_enabled              BIT(1)                NOT NULL,
+    two_factor_enabled              BIT(1)                NULL,
     wrong_oto_auth_attempt_count    INT                   NULL,
     CONSTRAINT pk_customer PRIMARY KEY (id)
     );

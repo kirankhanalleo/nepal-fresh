@@ -65,16 +65,19 @@ public abstract class ProductMapper {
 
     public void mapToOutOfStock(Product product){
         product.setStatus(productStatusRepository.findByName(ProductStatusConstant.OUT_OF_STOCK.getName()));
+        product.setUpdatedAt(Timestamp.from(Instant.now()));
         productRepository.save(product);
     }
 
     public void mapToInStock(Product product){
         product.setStatus(productStatusRepository.findByName(ProductStatusConstant.IN_STOCK.getName()));
+        product.setUpdatedAt(Timestamp.from(Instant.now()));
         productRepository.save(product);
     }
 
     public void mapToUnavailable(Product product){
         product.setStatus(productStatusRepository.findByName(ProductStatusConstant.UNAVAILABLE.getName()));
+        product.setUpdatedAt(Timestamp.from(Instant.now()));
         productRepository.save(product);
     }
 }

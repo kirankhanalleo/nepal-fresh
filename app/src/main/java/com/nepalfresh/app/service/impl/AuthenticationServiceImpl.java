@@ -38,7 +38,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             if (user.get().getStatus().equals(statusRepository.findByName(StatusConstant.ACTIVE.getName()))) {
                 Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
                 String jwtToken = jwtService.generateToken(user.get());
-
                 AuthenticationResponse authenticationResponse = new AuthenticationResponse();
                 authenticationResponse.setToken(jwtToken);
                 return ResponseUtil.getSuccessfulApiResponse(authenticationResponse, "Successfully Logged in.");
