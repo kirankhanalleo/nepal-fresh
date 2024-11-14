@@ -1,6 +1,8 @@
 package com.nepalfresh.app.mapper;
 
+import com.nepalfresh.common.dto.ProductCartModel;
 import com.nepalfresh.common.dto.request.CartItemRequest;
+import com.nepalfresh.common.dto.request.ViewCartRequest;
 import com.nepalfresh.entity.Cart;
 import com.nepalfresh.entity.CartItem;
 import com.nepalfresh.entity.Customer;
@@ -16,7 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public abstract class CartMapper {
@@ -27,13 +31,20 @@ public abstract class CartMapper {
     @Autowired
     protected CustomerRepository customerRepository;
 
-    public CartItem mapAddToCart(CartItemRequest cartItemRequest, Customer customer, Product product){
+    public void mapAddToCart(CartItemRequest cartItemRequest, Customer customer, Product product){
         Cart cart = cartRepository.findCartByCustomerId(customer.getId());
         CartItem cartItem = new CartItem();
         cartItem.setCart(cart);
         cartItem.setProduct(product);
         cartItem.setQuantity(cartItemRequest.getQuantity());
         cartItem.setAddedAt(Timestamp.from(Instant.now()));
-        return cartItemRepository.save(cartItem);
+        cartItemRepository.save(cartItem);
+    }
+    public abstract ViewCartRequest mapToCart(CartItem cartItem);
+
+    public List<ViewCartRequest> mapToViewCart(List<CartItem> cartItems) {
+        return cartItems.stream()
+                .map(this::mapToCart)
+                .collect(Collectors.toList());
     }
 }

@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ProductModel extends ModelBase {
+public class ProductCartModel extends ModelBase {
     @NotBlank(message = "Product is required")
     private String productSlug;
 }

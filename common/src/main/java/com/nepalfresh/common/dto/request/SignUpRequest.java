@@ -1,6 +1,7 @@
 package com.nepalfresh.common.dto.request;
 
 import com.nepalfresh.common.dto.ModelBase;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import lombok.Setter;
 public class SignUpRequest extends ModelBase {
     @NotBlank(message = "Fullname is required")
     private String fullName;
+    @Email(message = "Email format is invalid")
     @NotBlank(message = "Email is required")
     private String email;
     @NotBlank(message = "Password is required")
